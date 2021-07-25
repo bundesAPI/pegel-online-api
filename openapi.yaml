@@ -1,0 +1,10 @@
+openapi: "3.0.0"
+info:
+  description: "API für das bundesweite Messstellennetz der Wasserstraßen- und Schifffahrtsverwaltung des Bundes."
+  version: "1.0.0"
+  title: "Wasserstraßen- und Schifffahrtsverwaltung: Pegel-Online API"
+  
+servers:
+  - url: "https://www.pegelonline.wsv.de/webservices/rest-api/v2/"
+  
+path:
