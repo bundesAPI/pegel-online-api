@@ -55,9 +55,9 @@ paths:
           description: Gewässer, filtert Stationen für bestimmte Gewässer
           examples:
             Kein Filter:
-              value: null
+              value: []
             Rhein:
-              value: RHEIN
+              value: [RHEIN]
               description: Stationen, die am Gewässer Rhein liegen
         - in: query
           required: false
@@ -78,7 +78,7 @@ paths:
             type: string
           examples:
             Kein Filter:
-              value: null
+              value: ""
             Berlin:
               value: Berlin
               description: Stationen, die den _Berlin_ enthalten
@@ -89,11 +89,11 @@ paths:
             type: number
             format: float
           description: Breitengrad einer geografischen Position (WGS84 in Dezimalnotation)
-          examples:
-            Kein Filter:
-              value: null
-            Beispiel Breitengrad:
-              value: 52.44
+          # examples:
+            # Kein Filter:
+            #   value: # empty value not allowed
+            # Beispiel Breitengrad:
+            #   value: 52.44
         - in: query
           required: false
           name: longitude
@@ -101,11 +101,11 @@ paths:
             type: number
             format: float
           description: Längengrad einer geografischen Position (WGS84 in Dezimalnotation)
-          examples:
-            Kein Filter:
-              value: null
-            Beispiel Längengrad:
-              value: 13.57
+          # examples:
+            # Kein Filter:
+            #   value: # empty value not allowed
+            # Beispiel Längengrad:
+            #   value: 13.57
         - in: query
           required: false
           name: km
@@ -113,11 +113,11 @@ paths:
             type: number
             format: float
           description: Flusskilometer, die Angabe eines Gewässers (waters) ist notwendig
-          examples:
-            Kein Filter:
-              value: null
-            Flusskilometer 680:
-              value: 680
+          # examples:
+          #   Kein Filter:
+          #     value: # empty value not allowed
+          #   Flusskilometer 680:
+          #     value: 680
         - in: query
           required: false
           name: radius
@@ -128,11 +128,11 @@ paths:
             Suchradius für Stationen um die geografische Position oder den
             angegebenen Flusskilometer. Longitude und / oder Latitude oder km
             sind notwendig.
-          examples:
-            Kein Filter:
-              value: null
-            Radius 30km:
-              value: 30
+          # examples:
+          #   Kein Filter:
+          #     value: # empty value not allowed
+          #   Radius 30km:
+          #     value: 30
   /stations/{station}.json:
     get:
       summary: Zugriff auf eine bestimmte Station (Pegel)
@@ -217,7 +217,6 @@ paths:
           schema:
             type: boolean
           description: Aktivierung einer zweiten Y-Achse auf der rechten Seite
-          example: null
 
   /waters.json:
     get:
@@ -248,14 +247,12 @@ paths:
           schema:
             type: string
           description: Beschränkung auf ausgewählte Stationen (Pegel)
-          example: null
         - in: query
           required: false
           name: includeStations
           schema:
             type: boolean
           description: Stationen mit zurückgeben
-          example: null
         - $ref: "#/components/parameters/includeTimeseries"
         - $ref: "#/components/parameters/includeCurrentMeasurement"
         - $ref: "#/components/parameters/includeCharacteristicValues"
@@ -285,7 +282,6 @@ components:
       schema:
         type: boolean
       description: Informationen zu den Zeitreihen
-      example: null
     station:
       in: path
       required: true
@@ -300,7 +296,7 @@ components:
         Name:
           value: EITZE
         Pegelnummer:
-          value: 48900237
+          value: "48900237"
     includeCurrentMeasurement:
       in: query
       name: includeCurrentMeasurement
@@ -308,7 +304,6 @@ components:
       schema:
         type: boolean
       description: Aktuell gemessener Wert
-      example: null
     includeCharacteristicValues:
       in: query
       required: false
@@ -316,7 +311,6 @@ components:
       schema:
         type: boolean
       description: kennzeichnende Wasserstände
-      example: null
     timeseriesPath:
       in: path
       required: true
@@ -326,7 +320,7 @@ components:
       description: timeseries shortname
       examples:
         Kein Filter:
-          value: null
+          value: ""
         Wasserstand Rohdaten:
           value: W
         Lufttemperatur:
@@ -413,7 +407,6 @@ components:
       schema:
         type: number
         format: integer
-      example: null
     offset:
       name: offset
       in: query
@@ -421,7 +414,6 @@ components:
       schema:
         type: number
         format: integer
-      example: null
     timeseriesQuery:
       name: timeseries
       in: query
@@ -432,7 +424,7 @@ components:
       description: Filter nach ausgewählten Zeitreihen
       examples:
         Kein Filter:
-          value: null
+          value: ""
         Wasserstand Rohdaten:
           value: W
         Lufttemperatur:
@@ -482,7 +474,7 @@ components:
             description: Eindeutige unveränderliche ID
           number:
             type: string
-            example: 48900237
+            example: "48900237"
             description: Pegelnummer
           shortname:
             type: string
@@ -629,9 +621,7 @@ components:
         properties:
           shortDescription:
             type: string
-            example: null
             description: Kurzbeschreibung, maximal 55 Zeichen.
           longDescription:
             type: string
-            example: null
             description: Langbeschreibung, maximal 500 Zeichen.
