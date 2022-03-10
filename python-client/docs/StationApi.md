@@ -4,12 +4,12 @@ All URIs are relative to *https://www.pegelonline.wsv.de/webservices/rest-api/v2
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**stations_json_get**](StationApi.md#stations_json_get) | **GET** /stations.json | Übersicht über alle Stationen (Pegel)
-[**stations_station_json_get**](StationApi.md#stations_station_json_get) | **GET** /stations/{station}.json | Zugriff auf eine bestimmte Station (Pegel)
+[**get_stations**](StationApi.md#get_stations) | **GET** /stations.json | Übersicht über alle Stationen (Pegel)
+[**get_stations_by_id**](StationApi.md#get_stations_by_id) | **GET** /stations/{station}.json | Zugriff auf eine bestimmte Station (Pegel)
 
 
-# **stations_json_get**
-> StationOverviewResult stations_json_get()
+# **get_stations**
+> StationOverviewResult get_stations()
 
 Übersicht über alle Stationen (Pegel)
 
@@ -53,10 +53,10 @@ with pegel_online.ApiClient() as api_client:
     # and optional values
     try:
         # Übersicht über alle Stationen (Pegel)
-        api_response = api_instance.stations_json_get(include_timeseries=include_timeseries, include_current_measurement=include_current_measurement, include_characteristic_values=include_characteristic_values, waters=waters, ids=ids, timeseries=timeseries, fuzzy_id=fuzzy_id, latitude=latitude, longitude=longitude, km=km, radius=radius)
+        api_response = api_instance.get_stations(include_timeseries=include_timeseries, include_current_measurement=include_current_measurement, include_characteristic_values=include_characteristic_values, waters=waters, ids=ids, timeseries=timeseries, fuzzy_id=fuzzy_id, latitude=latitude, longitude=longitude, km=km, radius=radius)
         pprint(api_response)
     except pegel_online.ApiException as e:
-        print("Exception when calling StationApi->stations_json_get: %s\n" % e)
+        print("Exception when calling StationApi->get_stations: %s\n" % e)
 ```
 
 
@@ -98,8 +98,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **stations_station_json_get**
-> StationOverviewResult stations_station_json_get(station)
+# **get_stations_by_id**
+> StationOverviewResult get_stations_by_id(station)
 
 Zugriff auf eine bestimmte Station (Pegel)
 
@@ -133,19 +133,19 @@ with pegel_online.ApiClient() as api_client:
     # example passing only required values which don't have defaults set
     try:
         # Zugriff auf eine bestimmte Station (Pegel)
-        api_response = api_instance.stations_station_json_get(station)
+        api_response = api_instance.get_stations_by_id(station)
         pprint(api_response)
     except pegel_online.ApiException as e:
-        print("Exception when calling StationApi->stations_station_json_get: %s\n" % e)
+        print("Exception when calling StationApi->get_stations_by_id: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
         # Zugriff auf eine bestimmte Station (Pegel)
-        api_response = api_instance.stations_station_json_get(station, include_timeseries=include_timeseries, include_current_measurement=include_current_measurement, include_characteristic_values=include_characteristic_values)
+        api_response = api_instance.get_stations_by_id(station, include_timeseries=include_timeseries, include_current_measurement=include_current_measurement, include_characteristic_values=include_characteristic_values)
         pprint(api_response)
     except pegel_online.ApiException as e:
-        print("Exception when calling StationApi->stations_station_json_get: %s\n" % e)
+        print("Exception when calling StationApi->get_stations_by_id: %s\n" % e)
 ```
 
 

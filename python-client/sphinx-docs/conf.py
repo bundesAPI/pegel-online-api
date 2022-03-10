@@ -22,8 +22,8 @@ sys.path.insert(0, os.path.abspath("../"))
 # -- Project information -----------------------------------------------------
 
 project = "pegel_online-api"
-copyright = "2022, BundesAPI"
-author = "BundesAPI"
+copyright = "2022, Wasserstraßen- und Schifffahrtsverwaltung des Bundes (WSV)"
+author = "Wasserstraßen- und Schifffahrtsverwaltung des Bundes (WSV)"
 
 # The short X.Y version
 version = "0.1.0"

@@ -4,12 +4,12 @@ All URIs are relative to *https://www.pegelonline.wsv.de/webservices/rest-api/v2
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**stations_station_timeseries_json_get**](WaterApi.md#stations_station_timeseries_json_get) | **GET** /stations/{station}/{timeseries}.json | Zugriff auf CurrentMeasurment
-[**waters_json_get**](WaterApi.md#waters_json_get) | **GET** /waters.json | Zugriff auf die Ressource Water
+[**get_current_measurment_by_station**](WaterApi.md#get_current_measurment_by_station) | **GET** /stations/{station}/{timeseries}.json | Zugriff auf CurrentMeasurment
+[**get_waters**](WaterApi.md#get_waters) | **GET** /waters.json | Zugriff auf die Ressource Water
 
 
-# **stations_station_timeseries_json_get**
-> WaterResult stations_station_timeseries_json_get(station, timeseries)
+# **get_current_measurment_by_station**
+> WaterResult get_current_measurment_by_station(station, timeseries)
 
 Zugriff auf CurrentMeasurment
 
@@ -41,10 +41,10 @@ with pegel_online.ApiClient() as api_client:
     # example passing only required values which don't have defaults set
     try:
         # Zugriff auf CurrentMeasurment
-        api_response = api_instance.stations_station_timeseries_json_get(station, timeseries)
+        api_response = api_instance.get_current_measurment_by_station(station, timeseries)
         pprint(api_response)
     except pegel_online.ApiException as e:
-        print("Exception when calling WaterApi->stations_station_timeseries_json_get: %s\n" % e)
+        print("Exception when calling WaterApi->get_current_measurment_by_station: %s\n" % e)
 ```
 
 
@@ -77,8 +77,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **waters_json_get**
-> WaterResult waters_json_get()
+# **get_waters**
+> WaterResult get_waters()
 
 Zugriff auf die Ressource Water
 
@@ -117,10 +117,10 @@ with pegel_online.ApiClient() as api_client:
     # and optional values
     try:
         # Zugriff auf die Ressource Water
-        api_response = api_instance.waters_json_get(ids=ids, stations=stations, include_stations=include_stations, include_timeseries=include_timeseries, include_current_measurement=include_current_measurement, include_characteristic_values=include_characteristic_values)
+        api_response = api_instance.get_waters(ids=ids, stations=stations, include_stations=include_stations, include_timeseries=include_timeseries, include_current_measurement=include_current_measurement, include_characteristic_values=include_characteristic_values)
         pprint(api_response)
     except pegel_online.ApiException as e:
-        print("Exception when calling WaterApi->waters_json_get: %s\n" % e)
+        print("Exception when calling WaterApi->get_waters: %s\n" % e)
 ```
 
 

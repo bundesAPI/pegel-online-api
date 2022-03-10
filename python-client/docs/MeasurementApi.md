@@ -4,12 +4,12 @@ All URIs are relative to *https://www.pegelonline.wsv.de/webservices/rest-api/v2
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**stations_station_timeseries_measurements_json_get**](MeasurementApi.md#stations_station_timeseries_measurements_json_get) | **GET** /stations/{station}/{timeseries}/measurements.json | Zugriff auf die Ressource Measurement
-[**stations_station_timeseries_measurements_png_get**](MeasurementApi.md#stations_station_timeseries_measurements_png_get) | **GET** /stations/{station}/{timeseries}/measurements.png | Zugriff auf die Ressource Measurement - Rückgabe als Diagramm (PNG)
+[**get_measurement_by_station**](MeasurementApi.md#get_measurement_by_station) | **GET** /stations/{station}/{timeseries}/measurements.json | Zugriff auf die Ressource Measurement
+[**get_measurement_diagram_by_station**](MeasurementApi.md#get_measurement_diagram_by_station) | **GET** /stations/{station}/{timeseries}/measurements.png | Zugriff auf die Ressource Measurement - Rückgabe als Diagramm (PNG)
 
 
-# **stations_station_timeseries_measurements_json_get**
-> MeasurementResult stations_station_timeseries_measurements_json_get(station, timeseries)
+# **get_measurement_by_station**
+> MeasurementResult get_measurement_by_station(station, timeseries)
 
 Zugriff auf die Ressource Measurement
 
@@ -43,19 +43,19 @@ with pegel_online.ApiClient() as api_client:
     # example passing only required values which don't have defaults set
     try:
         # Zugriff auf die Ressource Measurement
-        api_response = api_instance.stations_station_timeseries_measurements_json_get(station, timeseries)
+        api_response = api_instance.get_measurement_by_station(station, timeseries)
         pprint(api_response)
     except pegel_online.ApiException as e:
-        print("Exception when calling MeasurementApi->stations_station_timeseries_measurements_json_get: %s\n" % e)
+        print("Exception when calling MeasurementApi->get_measurement_by_station: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
         # Zugriff auf die Ressource Measurement
-        api_response = api_instance.stations_station_timeseries_measurements_json_get(station, timeseries, start=start, end=end)
+        api_response = api_instance.get_measurement_by_station(station, timeseries, start=start, end=end)
         pprint(api_response)
     except pegel_online.ApiException as e:
-        print("Exception when calling MeasurementApi->stations_station_timeseries_measurements_json_get: %s\n" % e)
+        print("Exception when calling MeasurementApi->get_measurement_by_station: %s\n" % e)
 ```
 
 
@@ -90,8 +90,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **stations_station_timeseries_measurements_png_get**
-> file_type stations_station_timeseries_measurements_png_get(station, timeseries)
+# **get_measurement_diagram_by_station**
+> file_type get_measurement_diagram_by_station(station, timeseries)
 
 Zugriff auf die Ressource Measurement - Rückgabe als Diagramm (PNG)
 
@@ -127,19 +127,19 @@ with pegel_online.ApiClient() as api_client:
     # example passing only required values which don't have defaults set
     try:
         # Zugriff auf die Ressource Measurement - Rückgabe als Diagramm (PNG)
-        api_response = api_instance.stations_station_timeseries_measurements_png_get(station, timeseries)
+        api_response = api_instance.get_measurement_diagram_by_station(station, timeseries)
         pprint(api_response)
     except pegel_online.ApiException as e:
-        print("Exception when calling MeasurementApi->stations_station_timeseries_measurements_png_get: %s\n" % e)
+        print("Exception when calling MeasurementApi->get_measurement_diagram_by_station: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
         # Zugriff auf die Ressource Measurement - Rückgabe als Diagramm (PNG)
-        api_response = api_instance.stations_station_timeseries_measurements_png_get(station, timeseries, start=start, end=end, width=width, height=height, enable_secondary_y_axis=enable_secondary_y_axis)
+        api_response = api_instance.get_measurement_diagram_by_station(station, timeseries, start=start, end=end, width=width, height=height, enable_secondary_y_axis=enable_secondary_y_axis)
         pprint(api_response)
     except pegel_online.ApiException as e:
-        print("Exception when calling MeasurementApi->stations_station_timeseries_measurements_png_get: %s\n" % e)
+        print("Exception when calling MeasurementApi->get_measurement_diagram_by_station: %s\n" % e)
 ```
 
 
