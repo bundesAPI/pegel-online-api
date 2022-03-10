@@ -1,6 +1,9 @@
 openapi: "3.0.0"
 info:
-  version: "1.0.0"
+  contact:
+    url: "https://www.pegelonline.wsv.de/"
+    name: Wasserstraßen- und Schifffahrtsverwaltung des Bundes (WSV)
+  version: "1.0.1"
   title: "Wasserstraßen- und Schifffahrtsverwaltung: Pegel-Online API"
   description:
     "API für das bundesweite Messstellennetz der Wasserstraßen- und Schifffahrtsverwaltung des Bundes.
@@ -22,17 +25,25 @@ info:
 
     - `limit/offset`: Einschränkung der Anzahl der Ergebnisse. Hiermit kann 'Pagination' realisiert werden. `limit` gibt dabei die Anzahl der zurückgegebenen Elemente an. `offset` ermöglicht einen Offset vom Startwert. Beispiel: _limit=10&offset=20_ bedeutet, dass 10 Elemente beginnend mit dem 21. Element zurückgegeben werden.
     "
+  termsOfService: "https://www.pegelonline.wsv.de/gast/nutzungsbedingungen"
 
 servers:
-  - url: "https://www.pegelonline.wsv.de/webservices/rest-api/v2/"
-
+  - url: "https://www.pegelonline.wsv.de/webservices/rest-api/v2"
+tags:
+  - name: station
+    x-displayName: Station
+  - name: measurement
+    x-displayName: Measurement
+  - name: water
+    x-displayName: Water
 paths:
   /stations.json:
     get:
       summary: Übersicht über alle Stationen (Pegel)
       description: Stationen (Pegel) sortiert nach Gewässername und Messstellenname.
+      operationId: getStations
       tags:
-        - Station
+        - station
       responses:
         "200":
           description: OK
@@ -139,8 +150,9 @@ paths:
       description: >-
         Zugriff auf eine Station (Pegel) ist mittels des Namens, der Pegelnummer sowie
         der UUID möglich. Es wird die Verwendung der UUID empfohlen.
+      operationId: getStationsById
       tags:
-        - Station
+        - station
       responses:
         "200":
           description: OK
@@ -160,8 +172,9 @@ paths:
       description: >-
         Es handeln sich dabei um die gemessenen Rohwerte. Es können maximal
         Werte der letzten 31 Tage bezogen werden.
+      operationId: getMeasurementByStation
       tags:
-        - Measurement
+        - measurement
       responses:
         "200":
           description: OK
@@ -180,8 +193,9 @@ paths:
       description: >-
         Es handelt sich dabei um die gemessenen Rohwerte. Es können maximal
         Werte der letzten 31 Tage bezogen werden.
+      operationId: getMeasurementDiagramByStation
       tags:
-        - Measurement
+        - measurement
       responses:
         "200":
           description: OK
@@ -222,8 +236,9 @@ paths:
     get:
       summary: Zugriff auf die Ressource Water
       description: Alle Gewässer
+      operationId: getWaters
       tags:
-        - Water
+        - water
       responses:
         "200":
           description: OK
@@ -261,8 +276,9 @@ paths:
       summary: Zugriff auf CurrentMeasurment
       description: >-
         Liefert den aktuellen Wert der Station (Pegel). Kann auch als Unterressource von Timeseries angefordert werden.
+      operationId: getCurrentMeasurmentByStation
       tags:
-        - Water
+        - water
       responses:
         "200":
           description: OK
