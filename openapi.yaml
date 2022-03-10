@@ -3,7 +3,7 @@ info:
   contact:
     url: "https://www.pegelonline.wsv.de/"
     name: Wasserstraßen- und Schifffahrtsverwaltung des Bundes (WSV)
-  version: "1.0.1"
+  version: "1.0.0"
   title: "Wasserstraßen- und Schifffahrtsverwaltung: Pegel-Online API"
   description:
     "API für das bundesweite Messstellennetz der Wasserstraßen- und Schifffahrtsverwaltung des Bundes.
