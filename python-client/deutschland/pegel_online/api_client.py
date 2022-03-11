@@ -866,10 +866,10 @@ class Endpoint(object):
         Example:
 
         api_instance = MeasurementApi()
-        api_instance.stations_station_timeseries_measurements_json_get  # this is an instance of the class Endpoint
-        api_instance.stations_station_timeseries_measurements_json_get()  # this invokes api_instance.stations_station_timeseries_measurements_json_get.__call__()
+        api_instance.get_measurement_by_station  # this is an instance of the class Endpoint
+        api_instance.get_measurement_by_station()  # this invokes api_instance.get_measurement_by_station.__call__()
         which then invokes the callable functions stored in that endpoint at
-        api_instance.stations_station_timeseries_measurements_json_get.callable or self.callable in this class
+        api_instance.get_measurement_by_station.callable or self.callable in this class
 
         """
         return self.callable(self, *args, **kwargs)

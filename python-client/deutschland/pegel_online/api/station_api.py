@@ -37,12 +37,12 @@ class StationApi(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-        self.stations_json_get_endpoint = _Endpoint(
+        self.get_stations_endpoint = _Endpoint(
             settings={
                 "response_type": (StationOverviewResult,),
                 "auth": [],
                 "endpoint_path": "/stations.json",
-                "operation_id": "stations_json_get",
+                "operation_id": "get_stations",
                 "http_method": "GET",
                 "servers": None,
             },
@@ -118,12 +118,12 @@ class StationApi(object):
             },
             api_client=api_client,
         )
-        self.stations_station_json_get_endpoint = _Endpoint(
+        self.get_stations_by_id_endpoint = _Endpoint(
             settings={
                 "response_type": (StationOverviewResult,),
                 "auth": [],
                 "endpoint_path": "/stations/{station}.json",
-                "operation_id": "stations_station_json_get",
+                "operation_id": "get_stations_by_id",
                 "http_method": "GET",
                 "servers": None,
             },
@@ -171,14 +171,14 @@ class StationApi(object):
             api_client=api_client,
         )
 
-    def stations_json_get(self, **kwargs):
+    def get_stations(self, **kwargs):
         """Übersicht über alle Stationen (Pegel)  # noqa: E501
 
         Stationen (Pegel) sortiert nach Gewässername und Messstellenname.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.stations_json_get(async_req=True)
+        >>> thread = api.get_stations(async_req=True)
         >>> result = thread.get()
 
 
@@ -235,16 +235,16 @@ class StationApi(object):
         kwargs["_spec_property_naming"] = kwargs.get("_spec_property_naming", False)
         kwargs["_content_type"] = kwargs.get("_content_type")
         kwargs["_host_index"] = kwargs.get("_host_index")
-        return self.stations_json_get_endpoint.call_with_http_info(**kwargs)
+        return self.get_stations_endpoint.call_with_http_info(**kwargs)
 
-    def stations_station_json_get(self, station, **kwargs):
+    def get_stations_by_id(self, station, **kwargs):
         """Zugriff auf eine bestimmte Station (Pegel)  # noqa: E501
 
         Zugriff auf eine Station (Pegel) ist mittels des Namens, der Pegelnummer sowie der UUID möglich. Es wird die Verwendung der UUID empfohlen.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.stations_station_json_get(station, async_req=True)
+        >>> thread = api.get_stations_by_id(station, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -296,4 +296,4 @@ class StationApi(object):
         kwargs["_content_type"] = kwargs.get("_content_type")
         kwargs["_host_index"] = kwargs.get("_host_index")
         kwargs["station"] = station
-        return self.stations_station_json_get_endpoint.call_with_http_info(**kwargs)
+        return self.get_stations_by_id_endpoint.call_with_http_info(**kwargs)

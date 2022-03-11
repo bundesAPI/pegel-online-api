@@ -25,15 +25,15 @@ class TestWaterApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_stations_station_timeseries_json_get(self):
-        """Test case for stations_station_timeseries_json_get
+    def test_get_current_measurment_by_station(self):
+        """Test case for get_current_measurment_by_station
 
         Zugriff auf CurrentMeasurment  # noqa: E501
         """
         pass
 
-    def test_waters_json_get(self):
-        """Test case for waters_json_get
+    def test_get_waters(self):
+        """Test case for get_waters
 
         Zugriff auf die Ressource Water  # noqa: E501
         """

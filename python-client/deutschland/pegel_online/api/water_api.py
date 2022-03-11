@@ -37,12 +37,12 @@ class WaterApi(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-        self.stations_station_timeseries_json_get_endpoint = _Endpoint(
+        self.get_current_measurment_by_station_endpoint = _Endpoint(
             settings={
                 "response_type": (WaterResult,),
                 "auth": [],
                 "endpoint_path": "/stations/{station}/{timeseries}.json",
-                "operation_id": "stations_station_timeseries_json_get",
+                "operation_id": "get_current_measurment_by_station",
                 "http_method": "GET",
                 "servers": None,
             },
@@ -82,12 +82,12 @@ class WaterApi(object):
             },
             api_client=api_client,
         )
-        self.waters_json_get_endpoint = _Endpoint(
+        self.get_waters_endpoint = _Endpoint(
             settings={
                 "response_type": (WaterResult,),
                 "auth": [],
                 "endpoint_path": "/waters.json",
-                "operation_id": "waters_json_get",
+                "operation_id": "get_waters",
                 "http_method": "GET",
                 "servers": None,
             },
@@ -143,14 +143,14 @@ class WaterApi(object):
             api_client=api_client,
         )
 
-    def stations_station_timeseries_json_get(self, station, timeseries, **kwargs):
+    def get_current_measurment_by_station(self, station, timeseries, **kwargs):
         """Zugriff auf CurrentMeasurment  # noqa: E501
 
         Liefert den aktuellen Wert der Station (Pegel). Kann auch als Unterressource von Timeseries angefordert werden.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.stations_station_timeseries_json_get(station, timeseries, async_req=True)
+        >>> thread = api.get_current_measurment_by_station(station, timeseries, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -201,18 +201,18 @@ class WaterApi(object):
         kwargs["_host_index"] = kwargs.get("_host_index")
         kwargs["station"] = station
         kwargs["timeseries"] = timeseries
-        return self.stations_station_timeseries_json_get_endpoint.call_with_http_info(
+        return self.get_current_measurment_by_station_endpoint.call_with_http_info(
             **kwargs
         )
 
-    def waters_json_get(self, **kwargs):
+    def get_waters(self, **kwargs):
         """Zugriff auf die Ressource Water  # noqa: E501
 
         Alle Gewässer  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.waters_json_get(async_req=True)
+        >>> thread = api.get_waters(async_req=True)
         >>> result = thread.get()
 
 
@@ -264,4 +264,4 @@ class WaterApi(object):
         kwargs["_spec_property_naming"] = kwargs.get("_spec_property_naming", False)
         kwargs["_content_type"] = kwargs.get("_content_type")
         kwargs["_host_index"] = kwargs.get("_host_index")
-        return self.waters_json_get_endpoint.call_with_http_info(**kwargs)
+        return self.get_waters_endpoint.call_with_http_info(**kwargs)

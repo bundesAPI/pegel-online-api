@@ -25,15 +25,15 @@ class TestStationApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_stations_json_get(self):
-        """Test case for stations_json_get
+    def test_get_stations(self):
+        """Test case for get_stations
 
         Übersicht über alle Stationen (Pegel)  # noqa: E501
         """
         pass
 
-    def test_stations_station_json_get(self):
-        """Test case for stations_station_json_get
+    def test_get_stations_by_id(self):
+        """Test case for get_stations_by_id
 
         Zugriff auf eine bestimmte Station (Pegel)  # noqa: E501
         """

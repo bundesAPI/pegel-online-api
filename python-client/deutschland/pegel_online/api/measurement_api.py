@@ -37,12 +37,12 @@ class MeasurementApi(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-        self.stations_station_timeseries_measurements_json_get_endpoint = _Endpoint(
+        self.get_measurement_by_station_endpoint = _Endpoint(
             settings={
                 "response_type": (MeasurementResult,),
                 "auth": [],
                 "endpoint_path": "/stations/{station}/{timeseries}/measurements.json",
-                "operation_id": "stations_station_timeseries_measurements_json_get",
+                "operation_id": "get_measurement_by_station",
                 "http_method": "GET",
                 "servers": None,
             },
@@ -90,12 +90,12 @@ class MeasurementApi(object):
             },
             api_client=api_client,
         )
-        self.stations_station_timeseries_measurements_png_get_endpoint = _Endpoint(
+        self.get_measurement_diagram_by_station_endpoint = _Endpoint(
             settings={
                 "response_type": (file_type,),
                 "auth": [],
                 "endpoint_path": "/stations/{station}/{timeseries}/measurements.png",
-                "operation_id": "stations_station_timeseries_measurements_png_get",
+                "operation_id": "get_measurement_diagram_by_station",
                 "http_method": "GET",
                 "servers": None,
             },
@@ -156,16 +156,14 @@ class MeasurementApi(object):
             api_client=api_client,
         )
 
-    def stations_station_timeseries_measurements_json_get(
-        self, station, timeseries, **kwargs
-    ):
+    def get_measurement_by_station(self, station, timeseries, **kwargs):
         """Zugriff auf die Ressource Measurement  # noqa: E501
 
         Es handeln sich dabei um die gemessenen Rohwerte. Es können maximal Werte der letzten 31 Tage bezogen werden.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.stations_station_timeseries_measurements_json_get(station, timeseries, async_req=True)
+        >>> thread = api.get_measurement_by_station(station, timeseries, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -218,20 +216,16 @@ class MeasurementApi(object):
         kwargs["_host_index"] = kwargs.get("_host_index")
         kwargs["station"] = station
         kwargs["timeseries"] = timeseries
-        return self.stations_station_timeseries_measurements_json_get_endpoint.call_with_http_info(
-            **kwargs
-        )
+        return self.get_measurement_by_station_endpoint.call_with_http_info(**kwargs)
 
-    def stations_station_timeseries_measurements_png_get(
-        self, station, timeseries, **kwargs
-    ):
+    def get_measurement_diagram_by_station(self, station, timeseries, **kwargs):
         """Zugriff auf die Ressource Measurement - Rückgabe als Diagramm (PNG)  # noqa: E501
 
         Es handelt sich dabei um die gemessenen Rohwerte. Es können maximal Werte der letzten 31 Tage bezogen werden.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.stations_station_timeseries_measurements_png_get(station, timeseries, async_req=True)
+        >>> thread = api.get_measurement_diagram_by_station(station, timeseries, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -287,6 +281,6 @@ class MeasurementApi(object):
         kwargs["_host_index"] = kwargs.get("_host_index")
         kwargs["station"] = station
         kwargs["timeseries"] = timeseries
-        return self.stations_station_timeseries_measurements_png_get_endpoint.call_with_http_info(
+        return self.get_measurement_diagram_by_station_endpoint.call_with_http_info(
             **kwargs
         )

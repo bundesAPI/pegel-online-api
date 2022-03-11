@@ -25,15 +25,15 @@ class TestMeasurementApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_stations_station_timeseries_measurements_json_get(self):
-        """Test case for stations_station_timeseries_measurements_json_get
+    def test_get_measurement_by_station(self):
+        """Test case for get_measurement_by_station
 
         Zugriff auf die Ressource Measurement  # noqa: E501
         """
         pass
 
-    def test_stations_station_timeseries_measurements_png_get(self):
-        """Test case for stations_station_timeseries_measurements_png_get
+    def test_get_measurement_diagram_by_station(self):
+        """Test case for get_measurement_diagram_by_station
 
         Zugriff auf die Ressource Measurement - Rückgabe als Diagramm (PNG)  # noqa: E501
         """
