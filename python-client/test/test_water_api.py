@@ -28,7 +28,7 @@ class TestWaterApi(unittest.TestCase):
     def test_get_current_measurment_by_station(self):
         """Test case for get_current_measurment_by_station
 
-        Zugriff auf CurrentMeasurment  # noqa: E501
+        Zugriff auf eine Timeseries  # noqa: E501
         """
         pass
 

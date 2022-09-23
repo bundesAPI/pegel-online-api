@@ -14,6 +14,7 @@ import sys  # noqa: F401
 
 from deutschland.pegel_online.api_client import ApiClient
 from deutschland.pegel_online.api_client import Endpoint as _Endpoint
+from deutschland.pegel_online.model.station import Station
 from deutschland.pegel_online.model.station_overview_result import StationOverviewResult
 from deutschland.pegel_online.model_utils import (  # noqa: F401
     check_allowed_values,
@@ -120,7 +121,7 @@ class StationApi(object):
         )
         self.get_stations_by_id_endpoint = _Endpoint(
             settings={
-                "response_type": (StationOverviewResult,),
+                "response_type": (Station,),
                 "auth": [],
                 "endpoint_path": "/stations/{station}.json",
                 "operation_id": "get_stations_by_id",
@@ -219,6 +220,10 @@ class StationApi(object):
             _host_index (int/None): specifies the index of the server
                 that we want to use.
                 Default is read from the configuration.
+            _request_auths (list): set to override the auth_settings for an a single
+                request; this effectively ignores the authentication
+                in the spec for a single request.
+                Default is None
             async_req (bool): execute request asynchronously
 
         Returns:
@@ -235,6 +240,7 @@ class StationApi(object):
         kwargs["_spec_property_naming"] = kwargs.get("_spec_property_naming", False)
         kwargs["_content_type"] = kwargs.get("_content_type")
         kwargs["_host_index"] = kwargs.get("_host_index")
+        kwargs["_request_auths"] = kwargs.get("_request_auths", None)
         return self.get_stations_endpoint.call_with_http_info(**kwargs)
 
     def get_stations_by_id(self, station, **kwargs):
@@ -279,10 +285,14 @@ class StationApi(object):
             _host_index (int/None): specifies the index of the server
                 that we want to use.
                 Default is read from the configuration.
+            _request_auths (list): set to override the auth_settings for an a single
+                request; this effectively ignores the authentication
+                in the spec for a single request.
+                Default is None
             async_req (bool): execute request asynchronously
 
         Returns:
-            StationOverviewResult
+            Station
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -295,5 +305,6 @@ class StationApi(object):
         kwargs["_spec_property_naming"] = kwargs.get("_spec_property_naming", False)
         kwargs["_content_type"] = kwargs.get("_content_type")
         kwargs["_host_index"] = kwargs.get("_host_index")
+        kwargs["_request_auths"] = kwargs.get("_request_auths", None)
         kwargs["station"] = station
         return self.get_stations_by_id_endpoint.call_with_http_info(**kwargs)

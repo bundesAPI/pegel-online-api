@@ -12,9 +12,14 @@
 import sys
 import unittest
 
-from deutschland.pegel_online.model.measurement_result import MeasurementResult
+from deutschland.pegel_online.model.measurement_result_inner import (
+    MeasurementResultInner,
+)
 
 from deutschland import pegel_online
+
+globals()["MeasurementResultInner"] = MeasurementResultInner
+from deutschland.pegel_online.model.measurement_result import MeasurementResult
 
 
 class TestMeasurementResult(unittest.TestCase):

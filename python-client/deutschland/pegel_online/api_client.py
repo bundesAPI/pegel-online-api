@@ -147,6 +147,9 @@ class ApiClient(object):
         _host: typing.Optional[str] = None,
         _check_type: typing.Optional[bool] = None,
         _content_type: typing.Optional[str] = None,
+        _request_auths: typing.Optional[
+            typing.List[typing.Dict[str, typing.Any]]
+        ] = None,
     ):
 
         config = self.configuration
@@ -192,7 +195,13 @@ class ApiClient(object):
 
         # auth setting
         self.update_params_for_auth(
-            header_params, query_params, auth_settings, resource_path, method, body
+            header_params,
+            query_params,
+            auth_settings,
+            resource_path,
+            method,
+            body,
+            request_auths=_request_auths,
         )
 
         # request url
@@ -378,6 +387,9 @@ class ApiClient(object):
         ] = None,
         _host: typing.Optional[str] = None,
         _check_type: typing.Optional[bool] = None,
+        _request_auths: typing.Optional[
+            typing.List[typing.Dict[str, typing.Any]]
+        ] = None,
     ):
         """Makes the HTTP request (synchronous) and returns deserialized data.
 
@@ -425,6 +437,10 @@ class ApiClient(object):
         :param _check_type: boolean describing if the data back from the server
             should have its type checked.
         :type _check_type: bool, optional
+        :param _request_auths: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auths: list, optional
         :return:
             If async_req parameter is True,
             the request will be called asynchronously.
@@ -450,6 +466,7 @@ class ApiClient(object):
                 _request_timeout,
                 _host,
                 _check_type,
+                _request_auths=_request_auths,
             )
 
         return self.pool.apply_async(
@@ -471,6 +488,8 @@ class ApiClient(object):
                 _request_timeout,
                 _host,
                 _check_type,
+                None,
+                _request_auths,
             ),
         )
 
@@ -673,7 +692,14 @@ class ApiClient(object):
             return content_types[0]
 
     def update_params_for_auth(
-        self, headers, queries, auth_settings, resource_path, method, body
+        self,
+        headers,
+        queries,
+        auth_settings,
+        resource_path,
+        method,
+        body,
+        request_auths=None,
     ):
         """Updates header and query params based on authentication setting.
 
@@ -684,24 +710,38 @@ class ApiClient(object):
         :param method: A string representation of the HTTP request method.
         :param body: A object representing the body of the HTTP request.
             The object type is the return value of _encoder.default().
+        :param request_auths: if set, the provided settings will
+            override the token in the configuration.
         """
         if not auth_settings:
+            return
+
+        if request_auths:
+            for auth_setting in request_auths:
+                self._apply_auth_params(
+                    headers, queries, resource_path, method, body, auth_setting
+                )
             return
 
         for auth in auth_settings:
             auth_setting = self.configuration.auth_settings().get(auth)
             if auth_setting:
-                if auth_setting["in"] == "cookie":
-                    headers["Cookie"] = auth_setting["value"]
-                elif auth_setting["in"] == "header":
-                    if auth_setting["type"] != "http-signature":
-                        headers[auth_setting["key"]] = auth_setting["value"]
-                elif auth_setting["in"] == "query":
-                    queries.append((auth_setting["key"], auth_setting["value"]))
-                else:
-                    raise ApiValueError(
-                        "Authentication token must be in `query` or `header`"
-                    )
+                self._apply_auth_params(
+                    headers, queries, resource_path, method, body, auth_setting
+                )
+
+    def _apply_auth_params(
+        self, headers, queries, resource_path, method, body, auth_setting
+    ):
+        if auth_setting["in"] == "cookie":
+            headers["Cookie"] = auth_setting["key"] + "=" + auth_setting["value"]
+        elif auth_setting["in"] == "header":
+            if auth_setting["type"] != "http-signature":
+                headers[auth_setting["key"]] = auth_setting["value"]
+        elif auth_setting["in"] == "query":
+            queries.append((auth_setting["key"], auth_setting["value"]))
+        else:
+            raise ApiValueError("Authentication token must be in `query` or `header`")
 
 
 class Endpoint(object):
@@ -760,6 +800,7 @@ class Endpoint(object):
                 "_check_return_type",
                 "_content_type",
                 "_spec_property_naming",
+                "_request_auths",
             ]
         )
         self.params_map["nullable"].extend(["_request_timeout"])
@@ -784,6 +825,7 @@ class Endpoint(object):
             "_check_return_type": (bool,),
             "_spec_property_naming": (bool,),
             "_content_type": (none_type, str),
+            "_request_auths": (none_type, list),
         }
         self.openapi_types.update(extra_types)
         self.attribute_map = root_map["attribute_map"]
@@ -969,5 +1011,6 @@ class Endpoint(object):
             _preload_content=kwargs["_preload_content"],
             _request_timeout=kwargs["_request_timeout"],
             _host=_host,
+            _request_auths=kwargs["_request_auths"],
             collection_formats=params["collection_format"],
         )

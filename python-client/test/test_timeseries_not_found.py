@@ -12,16 +12,13 @@
 import sys
 import unittest
 
-from deutschland.pegel_online.model.station import Station
+from deutschland.pegel_online.model.timeseries_not_found import TimeseriesNotFound
 
 from deutschland import pegel_online
 
-globals()["Station"] = Station
-from deutschland.pegel_online.model.station_overview_result import StationOverviewResult
 
-
-class TestStationOverviewResult(unittest.TestCase):
-    """StationOverviewResult unit test stubs"""
+class TestTimeseriesNotFound(unittest.TestCase):
+    """TimeseriesNotFound unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,10 +26,10 @@ class TestStationOverviewResult(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testStationOverviewResult(self):
-        """Test StationOverviewResult"""
+    def testTimeseriesNotFound(self):
+        """Test TimeseriesNotFound"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = StationOverviewResult()  # noqa: E501
+        # model = TimeseriesNotFound()  # noqa: E501
         pass
 
 
