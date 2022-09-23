@@ -6,7 +6,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.7.8' ]
+        python-version: ["3.7.8"]
     steps:
       - uses: actions/checkout@v2
 
@@ -14,20 +14,20 @@ jobs:
       - name: "Create spectral file if it not exists"
         continue-on-error: true
         run: |
-           set -C; echo "extends: spectral:oas" > .spectral.yaml
+          set -C; echo "extends: spectral:oas" > .spectral.yaml
 
       # Runs a single command using the runners shell
       - name: "Lint file"
-        uses: stoplightio/spectral-action@v0.8.1
+        uses: stoplightio/spectral-action@latest
         with:
-            file_glob: "openapi.yaml"
+          file_glob: "openapi.yaml"
 
       - name: "Generate deutschland code"
         uses: wirthual/deutschland-generator-action@latest
         with:
           openapi-file: ${{ github.workspace }}/openapi.yaml
-          commit-to-git: true
-          upload-to-pypi: true
+          commit-to-git: ${{ github.repository_owner == 'bundesAPI'}}
+          upload-to-pypi: ${{ github.repository_owner == 'bundesAPI'}}
           upload-to-testpypi: false
           pypi-token: ${{ secrets.PYPI_PRODUCTION }}
           testpypi-token: ${{ secrets.PYPI_TEST }}

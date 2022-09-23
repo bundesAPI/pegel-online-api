@@ -63,13 +63,14 @@ paths:
             type: array
             items:
               type: string
-          description: Gewässer, filtert Stationen für bestimmte Gewässer
+          description: "Gewässer, filtert Stationen für bestimmte Gewässer"
           examples:
             Kein Filter:
               value: []
             Rhein:
-              value: [RHEIN]
-              description: Stationen, die am Gewässer Rhein liegen
+              value:
+                - RHEIN
+              description: "Stationen, die am Gewässer Rhein liegen"
         - in: query
           required: false
           name: ids
@@ -78,9 +79,7 @@ paths:
             type: array
             items:
               type: string
-          description: >-
-            Filter nach Stationen, möglich sind der Pegelname, Pegelnummer oder die
-            UUID
+          description: "Filter nach Stationen, möglich sind der Pegelname, Pegelnummer oder die UUID"
         - $ref: "#/components/parameters/timeseriesQuery"
         - in: query
           required: false
@@ -92,7 +91,7 @@ paths:
               value: ""
             Berlin:
               value: Berlin
-              description: Stationen, die den _Berlin_ enthalten
+              description: "Stationen, die _Berlin_ enthalten"
         - in: query
           required: false
           name: latitude
@@ -100,11 +99,6 @@ paths:
             type: number
             format: float
           description: Breitengrad einer geografischen Position (WGS84 in Dezimalnotation)
-          # examples:
-            # Kein Filter:
-            #   value: # empty value not allowed
-            # Beispiel Breitengrad:
-            #   value: 52.44
         - in: query
           required: false
           name: longitude
@@ -112,38 +106,20 @@ paths:
             type: number
             format: float
           description: Längengrad einer geografischen Position (WGS84 in Dezimalnotation)
-          # examples:
-            # Kein Filter:
-            #   value: # empty value not allowed
-            # Beispiel Längengrad:
-            #   value: 13.57
         - in: query
           required: false
           name: km
           schema:
             type: number
             format: float
-          description: Flusskilometer, die Angabe eines Gewässers (waters) ist notwendig
-          # examples:
-          #   Kein Filter:
-          #     value: # empty value not allowed
-          #   Flusskilometer 680:
-          #     value: 680
+          description: "Flusskilometer, die Angabe eines Gewässers (waters) ist notwendig"
         - in: query
           required: false
           name: radius
           schema:
             type: number
             format: float
-          description: >-
-            Suchradius für Stationen um die geografische Position oder den
-            angegebenen Flusskilometer. Longitude und / oder Latitude oder km
-            sind notwendig.
-          # examples:
-          #   Kein Filter:
-          #     value: # empty value not allowed
-          #   Radius 30km:
-          #     value: 30
+          description: "Suchradius für Stationen um die geografische Position oder den angegebenen Flusskilometer. Longitude und / oder Latitude oder km sind notwendig."
   /stations/{station}.json:
     get:
       summary: Zugriff auf eine bestimmte Station (Pegel)
@@ -159,7 +135,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StationOverviewResult"
+                $ref: "#/components/schemas/Station"
       parameters:
         - $ref: "#/components/parameters/station"
         - $ref: "#/components/parameters/includeTimeseries"
@@ -182,11 +158,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MeasurementResult"
+        "404":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimeseriesNotFound"
       parameters:
         - $ref: "#/components/parameters/station"
         - $ref: "#/components/parameters/timeseriesPath"
         - $ref: "#/components/parameters/start"
         - $ref: "#/components/parameters/end"
+
   /stations/{station}/{timeseries}/measurements.png:
     get:
       summary: Zugriff auf die Ressource Measurement - Rückgabe als Diagramm (PNG)
@@ -204,6 +187,12 @@ paths:
               schema:
                 type: string
                 format: binary
+        "404":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimeseriesNotFound"
       parameters:
         - $ref: "#/components/parameters/station"
         - $ref: "#/components/parameters/timeseriesPath"
@@ -271,9 +260,10 @@ paths:
         - $ref: "#/components/parameters/includeTimeseries"
         - $ref: "#/components/parameters/includeCurrentMeasurement"
         - $ref: "#/components/parameters/includeCharacteristicValues"
+
   /stations/{station}/{timeseries}.json:
     get:
-      summary: Zugriff auf CurrentMeasurment
+      summary: Zugriff auf eine Timeseries
       description: >-
         Liefert den aktuellen Wert der Station (Pegel). Kann auch als Unterressource von Timeseries angefordert werden.
       operationId: getCurrentMeasurmentByStation
@@ -285,10 +275,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/WaterResult"
+                $ref: "#/components/schemas/Timeseries"
+        "404":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimeseriesNotFound"
       parameters:
         - $ref: "#/components/parameters/station"
         - $ref: "#/components/parameters/timeseriesPath"
+        - $ref: "#/components/parameters/includeCurrentMeasurement"
+        - $ref: "#/components/parameters/includeCharacteristicValues"
 components:
   parameters:
     includeTimeseries:
@@ -297,18 +295,18 @@ components:
       name: includeTimeseries
       schema:
         type: boolean
-      description: Informationen zu den Zeitreihen
+      description: "Informationen zu den Zeitreihen"
     station:
       in: path
       required: true
       name: station
       schema:
         type: string
-      description: UUID / Name / Pegelnummer der Station.
+      description: "UUID / Name / Pegelnummer der Station."
       examples:
         UUID:
           value: 593647aa-9fea-43ec-a7d6-6476a76ae868
-          description: UUID der Station
+          description: "UUID der Station"
         Name:
           value: EITZE
         Pegelnummer:
@@ -319,24 +317,22 @@ components:
       required: false
       schema:
         type: boolean
-      description: Aktuell gemessener Wert
+      description: "Aktuell gemessener Wert"
     includeCharacteristicValues:
       in: query
       required: false
       name: includeCharacteristicValues
       schema:
         type: boolean
-      description: kennzeichnende Wasserstände
+      description: "kennzeichnende Wasserstände"
     timeseriesPath:
       in: path
       required: true
       name: timeseries
       schema:
         type: string
-      description: timeseries shortname
+      description: "timeseries shortname"
       examples:
-        Kein Filter:
-          value: ""
         Wasserstand Rohdaten:
           value: W
         Lufttemperatur:
@@ -380,14 +376,13 @@ components:
       schema:
         type: string
         format: datetime
-      description: >-
-        Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. "P8D" für die Messwerte der letzten 8 Tage) sind möglich.
+      description: "Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. 'P8D' für die Messwerte der letzten 8 Tage) sind möglich."
       examples:
         Datum:
           value: "2022-02-06T09:00:00+01:00"
         Period:
           value: P8D
-          description: Messwerte der letzten 8 Tage
+          description: "Messwerte der letzten 8 Tage"
     end:
       name: end
       in: query
@@ -395,8 +390,7 @@ components:
       schema:
         type: string
         format: datetime
-      description: >-
-        Endzeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Kann auch leer gelassen werden, dann wird automatisch der aktuelle Zeitstempel verwendet.
+      description: "Endzeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Kann auch leer gelassen werden, dann wird automatisch der aktuelle Zeitstempel verwendet."
       example: ""
     charset:
       name: charset
@@ -404,7 +398,7 @@ components:
       required: false
       schema:
         type: string
-      description: Kodierung der Response
+      description: "Kodierung der Response"
       example: UTF-8
     prettyprint:
       name: prettyprint
@@ -412,9 +406,7 @@ components:
       required: false
       schema:
         type: boolean
-      description: >-
-        Bessere Lesbarkeit der Response durch Aufteilen in mehreren Zeilen. Für
-        den produktiven Einsatz wird `false` empfohlen.
+      description: "Bessere Lesbarkeit der Response durch Aufteilen in mehreren Zeilen. Für den produktiven Einsatz wird `false` empfohlen."
       example: false
     limit:
       name: limit
@@ -437,7 +429,7 @@ components:
       explode: false
       schema:
         type: string
-      description: Filter nach ausgewählten Zeitreihen
+      description: "Filter nach ausgewählten Zeitreihen"
       examples:
         Kein Filter:
           value: ""
@@ -477,51 +469,52 @@ components:
           value: VA
         Chlorid:
           value: CL
-
   schemas:
     StationOverviewResult:
       type: array
       items:
+        $ref: "#/components/schemas/Station"
+    Station:
         type: object
         properties:
           uuid:
             type: string
             example: 47174d8f-1b8e-4599-8a59-b580dd55bc87
-            description: Eindeutige unveränderliche ID
+            description: "Eindeutige unveränderliche ID"
           number:
             type: string
             example: "48900237"
-            description: Pegelnummer
+            description: "Pegelnummer"
           shortname:
             type: string
             example: EITZE
-            description: Pegelname (max. 40 Zeichen)
+            description: "Pegelname (max. 40 Zeichen)"
           longname:
             type: string
             example: EITZE
-            description: Pegelname (max. 255 Zeichen)
+            description: "Pegelname (max. 255 Zeichen)"
           km:
             type: number
             format: float
             example: 9.56
-            description: Flusskilometer
+            description: "Flusskilometer"
           agency:
             type: string
             example: VERDEN
-            description: Wasserstraßen- und Schifffahrtsamt
+            description: "Wasserstraßen- und Schifffahrtsamt"
           longitude:
             type: number
             format: float
             example: 9.276769435375872
-            description: Längengrad in WGS84 Dezimalnotation
+            description: "Längengrad in WGS84 Dezimalnotation"
           latitude:
             type: number
             format: float
             example: 52.90406544743417
-            description: Breitengrad in WGS84 Dezimalnotation
+            description: "Breitengrad in WGS84 Dezimalnotation"
           water:
             type: object
-            description: Angaben zum Gewässer
+            description: "Angaben zum Gewässer"
             properties:
               shortname:
                 type: string
@@ -543,16 +536,16 @@ components:
         longname:
           type: string
           example: WASSERSTAND ROHDATEN
-          description: Langbezeichnung
+          description: "Langbezeichnung"
         unit:
           type: string
           example: cm
-          description: Maßeinheit
+          description: "Maßeinheit"
         equidistance:
           type: number
           format: float
           example: 15
-          description: Abstand der Messwerte in Minuten.
+          description: "Abstand der Messwerte in Minuten."
         currrentMeasurement:
           $ref: "#/components/schemas/CurrentMeasurement"
         gaugeZero:
@@ -561,41 +554,40 @@ components:
             unit:
               type: string
               example: m. ü. NN
-              description: >-
-                Einheit des Pegelnullpunkts (immer in Metern über einem
-                Normalhöhennull ([Dokumentation](https://www.pegelonline.wsv.de/gast/hilfe#hilfe_hoehensystem))
+              description: "Einheit des Pegelnullpunkts (immer in Metern über einem Normalhöhennull ([Dokumentation](https://www.pegelonline.wsv.de/gast/hilfe#hilfe_hoehensystem))"
             value:
               type: number
               format: float
               example: 8
-              description: Höhe als Dezimalwert
+              description: "Höhe als Dezimalwert"
             validFrom:
               type: string
               format: date
               example: "1985-03-13"
-              description: Beginn der Gültigkeit. [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Datum.
+              description: "Beginn der Gültigkeit. [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Datum."
         characteristicValues:
           type: array
           items:
             $ref: "#/components/schemas/CharacteristicValues"
     CharacteristicValues:
       type: object
-      description: Diese Beschreibungen variieren.
-
+      description: "Diese Beschreibungen variieren."
     CurrentMeasurement:
       type: object
       properties:
         timestamp:
           example: "2022-03-02T10:30:00+01:00"
         value:
+          type: number
           example: 323
         trend:
+          type: number
           example: -1
         stateMnwMhw:
+          type: string
           example: normal
         stateNswHsw:
           example: unknown
-
     MeasurementResult:
       type: array
       items:
@@ -605,39 +597,42 @@ components:
             type: string
             format: datetime
             example: "2022-02-06T10:15:00+01:00"
-            description: Zeitpunkt im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format codiert
+            description: "Zeitpunkt im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format codiert"
           value:
             type: number
             format: float
             example: 333
-            description: >-
-              Wert als Dezimalzahl in der Einheit, welche durch die Timeseries
-              der Station vorgegeben ist.
+            description: "Wert als Dezimalzahl in der Einheit, welche durch die Timeseries der Station vorgegeben ist."
     WaterResult:
-      type: array
-      items:
-        type: object
-        properties:
-          shortname:
-            type: string
-            format: datetime
-            example: RHEIN
-            description: Kurzbezeichnung, maximal 40 Zeichen.
-          longname:
-            type: string
-            example: RHEIN
-            description: Langbezeichnung, maximal 255 Zeichen.
+      type: object
+      properties:
+        shortname:
+          type: string
+          format: datetime
+          example: RHEIN
+          description: "Kurzbezeichnung, maximal 40 Zeichen."
+        longname:
+          type: string
+          example: RHEIN
+          description: "Langbezeichnung, maximal 255 Zeichen."
+    TimeseriesNotFound:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        msg:
+          type: string
+          example: "Timeseries does not exist."
     Comment:
-      description: >-
-        Liegt z.B. eine Fehlfunktion oder ein Ausfall an der Messstelle vor, so
-        ist dies hier mit einer Textbeschreibung erläutert.
+      description: "Liegt z.B. eine Fehlfunktion oder ein Ausfall an der Messstelle vor, so ist dies hier mit einer Textbeschreibung erläutert."
       type: array
       items:
         type: object
         properties:
           shortDescription:
             type: string
-            description: Kurzbeschreibung, maximal 55 Zeichen.
+            description: "Kurzbeschreibung, maximal 55 Zeichen."
           longDescription:
             type: string
-            description: Langbeschreibung, maximal 500 Zeichen.
+            description: "Langbeschreibung, maximal 500 Zeichen."
