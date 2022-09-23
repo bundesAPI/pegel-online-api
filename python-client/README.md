@@ -61,6 +61,7 @@ from deutschland import pegel_online
 from pprint import pprint
 from deutschland.pegel_online.api import measurement_api
 from deutschland.pegel_online.model.measurement_result import MeasurementResult
+from deutschland.pegel_online.model.timeseries_not_found import TimeseriesNotFound
 # Defining the host is optional and defaults to https://www.pegelonline.wsv.de/webservices/rest-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pegel_online.Configuration(
@@ -74,8 +75,8 @@ with pegel_online.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = measurement_api.MeasurementApi(api_client)
     station = "593647aa-9fea-43ec-a7d6-6476a76ae868" # str | UUID / Name / Pegelnummer der Station.
-    timeseries = "" # str | timeseries shortname
-    start = "2022-02-06T09:00:00+01:00" # str | Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. \"P8D\" für die Messwerte der letzten 8 Tage) sind möglich. (optional)
+    timeseries = "W" # str | timeseries shortname
+    start = "2022-02-06T09:00:00+01:00" # str | Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. 'P8D' für die Messwerte der letzten 8 Tage) sind möglich. (optional)
     end = "" # str | Endzeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Kann auch leer gelassen werden, dann wird automatisch der aktuelle Zeitstempel verwendet. (optional)
 
     try:
@@ -96,18 +97,23 @@ Class | Method | HTTP request | Description
 *MeasurementApi* | [**get_measurement_diagram_by_station**](docs/MeasurementApi.md#get_measurement_diagram_by_station) | **GET** /stations/{station}/{timeseries}/measurements.png | Zugriff auf die Ressource Measurement - Rückgabe als Diagramm (PNG)
 *StationApi* | [**get_stations**](docs/StationApi.md#get_stations) | **GET** /stations.json | Übersicht über alle Stationen (Pegel)
 *StationApi* | [**get_stations_by_id**](docs/StationApi.md#get_stations_by_id) | **GET** /stations/{station}.json | Zugriff auf eine bestimmte Station (Pegel)
-*WaterApi* | [**get_current_measurment_by_station**](docs/WaterApi.md#get_current_measurment_by_station) | **GET** /stations/{station}/{timeseries}.json | Zugriff auf CurrentMeasurment
+*WaterApi* | [**get_current_measurment_by_station**](docs/WaterApi.md#get_current_measurment_by_station) | **GET** /stations/{station}/{timeseries}.json | Zugriff auf eine Timeseries
 *WaterApi* | [**get_waters**](docs/WaterApi.md#get_waters) | **GET** /waters.json | Zugriff auf die Ressource Water
 
 
 ## Documentation For Models
 
  - [Comment](docs/Comment.md)
+ - [CommentInner](docs/CommentInner.md)
  - [CurrentMeasurement](docs/CurrentMeasurement.md)
  - [MeasurementResult](docs/MeasurementResult.md)
+ - [MeasurementResultInner](docs/MeasurementResultInner.md)
+ - [Station](docs/Station.md)
  - [StationOverviewResult](docs/StationOverviewResult.md)
+ - [StationWater](docs/StationWater.md)
  - [Timeseries](docs/Timeseries.md)
  - [TimeseriesGaugeZero](docs/TimeseriesGaugeZero.md)
+ - [TimeseriesNotFound](docs/TimeseriesNotFound.md)
  - [WaterResult](docs/WaterResult.md)
 
 

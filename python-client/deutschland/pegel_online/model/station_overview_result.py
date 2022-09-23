@@ -1,5 +1,5 @@
 """
-    Wasserstraßen- und Schifffahrtsverwaltung: Pegel-Online API
+    Pegel-Online API
 
     API für das bundesweite Messstellennetz der Wasserstraßen- und Schifffahrtsverwaltung des Bundes.  Die API stellt drei verschiedene Ressourcen zur Verfügung: __Station__, __Measurement__, __Water__. ### Authentifizierung / Autorisierung / API Limitierung Es ist keine Authentifizierung oder Autorisierung notwendig. Aktuell besteht keine API Limitierung. ### Allgemeine Query-Parameter Zusätzlich zu den angegebenen Parametern sind ebenfalls allgemeine Parameter für alle Schnittstellen verfügbar ([Dokumentation](https://www.pegelonline.wsv.de/webservice/dokuRestapi;jsessionid=A294589CCEF6630142D2589F49BFA2EC#urlParameter)). - `charset`: Gibt die Kodierung der Response an. Standard ist hier _UTF-8_. Möglich ist z.B. auch _ISO-8859-1_. - `prettyprint`: Kann die zur besseren Lesbarkeit standardmäßig aktivierte Teilung der Response in mehreren Zeilen deaktivieren: _prettyprint=false_. Diese Einstellung wird für den produktiven Einsatz empfohlen. - `limit/offset`: Einschränkung der Anzahl der Ergebnisse. Hiermit kann 'Pagination' realisiert werden. `limit` gibt dabei die Anzahl der zurückgegebenen Elemente an. `offset` ermöglicht einen Offset vom Startwert. Beispiel: _limit=10&offset=20_ bedeutet, dass 10 Elemente beginnend mit dem 21. Element zurückgegeben werden.   # noqa: E501
 
@@ -28,6 +28,12 @@ from deutschland.pegel_online.model_utils import (  # noqa: F401
     none_type,
     validate_get_composed_info,
 )
+
+
+def lazy_import():
+    from deutschland.pegel_online.model.station import Station
+
+    globals()["Station"] = Station
 
 
 class StationOverviewResult(ModelSimple):
@@ -68,10 +74,9 @@ class StationOverviewResult(ModelSimple):
             openapi_types (dict): The key is attribute name
                 and the value is attribute type.
         """
+        lazy_import()
         return {
-            "value": (
-                [{str: (bool, date, datetime, dict, float, int, list, str, none_type)}],
-            ),
+            "value": ([Station],),
         }
 
     @cached_property
@@ -102,10 +107,10 @@ class StationOverviewResult(ModelSimple):
         Note that value can be passed either in args or in kwargs, but not in both.
 
         Args:
-            args[0] ([{str: (bool, date, datetime, dict, float, int, list, str, none_type)}]):  # noqa: E501
+            args[0] ([Station]):  # noqa: E501
 
         Keyword Args:
-            value ([{str: (bool, date, datetime, dict, float, int, list, str, none_type)}]):  # noqa: E501
+            value ([Station]):  # noqa: E501
             _check_type (bool): if True, values for parameters in openapi_types
                                 will be type checked and a TypeError will be
                                 raised if the wrong type is input.
@@ -198,10 +203,10 @@ class StationOverviewResult(ModelSimple):
         Note that value can be passed either in args or in kwargs, but not in both.
 
         Args:
-            args[0] ([{str: (bool, date, datetime, dict, float, int, list, str, none_type)}]):  # noqa: E501
+            args[0] ([Station]):  # noqa: E501
 
         Keyword Args:
-            value ([{str: (bool, date, datetime, dict, float, int, list, str, none_type)}]):  # noqa: E501
+            value ([Station]):  # noqa: E501
             _check_type (bool): if True, values for parameters in openapi_types
                                 will be type checked and a TypeError will be
                                 raised if the wrong type is input.

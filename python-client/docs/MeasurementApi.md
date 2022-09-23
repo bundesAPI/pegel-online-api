@@ -22,6 +22,7 @@ Es handeln sich dabei um die gemessenen Rohwerte. Es können maximal Werte der l
 import time
 from deutschland import pegel_online
 from deutschland.pegel_online.api import measurement_api
+from deutschland.pegel_online.model.timeseries_not_found import TimeseriesNotFound
 from deutschland.pegel_online.model.measurement_result import MeasurementResult
 from pprint import pprint
 # Defining the host is optional and defaults to https://www.pegelonline.wsv.de/webservices/rest-api/v2
@@ -36,8 +37,8 @@ with pegel_online.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = measurement_api.MeasurementApi(api_client)
     station = "593647aa-9fea-43ec-a7d6-6476a76ae868" # str | UUID / Name / Pegelnummer der Station.
-    timeseries = "" # str | timeseries shortname
-    start = "2022-02-06T09:00:00+01:00" # str | Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. \"P8D\" für die Messwerte der letzten 8 Tage) sind möglich. (optional)
+    timeseries = "W" # str | timeseries shortname
+    start = "2022-02-06T09:00:00+01:00" # str | Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. 'P8D' für die Messwerte der letzten 8 Tage) sind möglich. (optional)
     end = "" # str | Endzeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Kann auch leer gelassen werden, dann wird automatisch der aktuelle Zeitstempel verwendet. (optional)
 
     # example passing only required values which don't have defaults set
@@ -65,7 +66,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **station** | **str**| UUID / Name / Pegelnummer der Station. |
  **timeseries** | **str**| timeseries shortname |
- **start** | **str**| Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. \&quot;P8D\&quot; für die Messwerte der letzten 8 Tage) sind möglich. | [optional]
+ **start** | **str**| Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. &#39;P8D&#39; für die Messwerte der letzten 8 Tage) sind möglich. | [optional]
  **end** | **str**| Endzeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Kann auch leer gelassen werden, dann wird automatisch der aktuelle Zeitstempel verwendet. | [optional]
 
 ### Return type
@@ -87,6 +88,7 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**404** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -104,6 +106,7 @@ Es handelt sich dabei um die gemessenen Rohwerte. Es können maximal Werte der l
 import time
 from deutschland import pegel_online
 from deutschland.pegel_online.api import measurement_api
+from deutschland.pegel_online.model.timeseries_not_found import TimeseriesNotFound
 from pprint import pprint
 # Defining the host is optional and defaults to https://www.pegelonline.wsv.de/webservices/rest-api/v2
 # See configuration.py for a list of all supported configuration parameters.
@@ -117,8 +120,8 @@ with pegel_online.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = measurement_api.MeasurementApi(api_client)
     station = "593647aa-9fea-43ec-a7d6-6476a76ae868" # str | UUID / Name / Pegelnummer der Station.
-    timeseries = "" # str | timeseries shortname
-    start = "2022-02-06T09:00:00+01:00" # str | Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. \"P8D\" für die Messwerte der letzten 8 Tage) sind möglich. (optional)
+    timeseries = "W" # str | timeseries shortname
+    start = "2022-02-06T09:00:00+01:00" # str | Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. 'P8D' für die Messwerte der letzten 8 Tage) sind möglich. (optional)
     end = "" # str | Endzeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Kann auch leer gelassen werden, dann wird automatisch der aktuelle Zeitstempel verwendet. (optional)
     width = 900 # float | Breite der grafischen Darstellung (optional)
     height = 400 # float | Höhe der grafischen Darstellung (optional)
@@ -149,7 +152,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **station** | **str**| UUID / Name / Pegelnummer der Station. |
  **timeseries** | **str**| timeseries shortname |
- **start** | **str**| Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. \&quot;P8D\&quot; für die Messwerte der letzten 8 Tage) sind möglich. | [optional]
+ **start** | **str**| Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. &#39;P8D&#39; für die Messwerte der letzten 8 Tage) sind möglich. | [optional]
  **end** | **str**| Endzeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Kann auch leer gelassen werden, dann wird automatisch der aktuelle Zeitstempel verwendet. | [optional]
  **width** | **float**| Breite der grafischen Darstellung | [optional]
  **height** | **float**| Höhe der grafischen Darstellung | [optional]
@@ -166,7 +169,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: image/png
+ - **Accept**: image/png, application/json
 
 
 ### HTTP response details
@@ -174,6 +177,7 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**404** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

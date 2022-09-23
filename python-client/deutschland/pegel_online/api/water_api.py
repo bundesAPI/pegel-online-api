@@ -1,5 +1,5 @@
 """
-    Wasserstraßen- und Schifffahrtsverwaltung: Pegel-Online API
+    Pegel-Online API
 
     API für das bundesweite Messstellennetz der Wasserstraßen- und Schifffahrtsverwaltung des Bundes.  Die API stellt drei verschiedene Ressourcen zur Verfügung: __Station__, __Measurement__, __Water__. ### Authentifizierung / Autorisierung / API Limitierung Es ist keine Authentifizierung oder Autorisierung notwendig. Aktuell besteht keine API Limitierung. ### Allgemeine Query-Parameter Zusätzlich zu den angegebenen Parametern sind ebenfalls allgemeine Parameter für alle Schnittstellen verfügbar ([Dokumentation](https://www.pegelonline.wsv.de/webservice/dokuRestapi;jsessionid=A294589CCEF6630142D2589F49BFA2EC#urlParameter)). - `charset`: Gibt die Kodierung der Response an. Standard ist hier _UTF-8_. Möglich ist z.B. auch _ISO-8859-1_. - `prettyprint`: Kann die zur besseren Lesbarkeit standardmäßig aktivierte Teilung der Response in mehreren Zeilen deaktivieren: _prettyprint=false_. Diese Einstellung wird für den produktiven Einsatz empfohlen. - `limit/offset`: Einschränkung der Anzahl der Ergebnisse. Hiermit kann 'Pagination' realisiert werden. `limit` gibt dabei die Anzahl der zurückgegebenen Elemente an. `offset` ermöglicht einen Offset vom Startwert. Beispiel: _limit=10&offset=20_ bedeutet, dass 10 Elemente beginnend mit dem 21. Element zurückgegeben werden.   # noqa: E501
 
@@ -14,6 +14,8 @@ import sys  # noqa: F401
 
 from deutschland.pegel_online.api_client import ApiClient
 from deutschland.pegel_online.api_client import Endpoint as _Endpoint
+from deutschland.pegel_online.model.timeseries import Timeseries
+from deutschland.pegel_online.model.timeseries_not_found import TimeseriesNotFound
 from deutschland.pegel_online.model.water_result import WaterResult
 from deutschland.pegel_online.model_utils import (  # noqa: F401
     check_allowed_values,
@@ -39,7 +41,7 @@ class WaterApi(object):
         self.api_client = api_client
         self.get_current_measurment_by_station_endpoint = _Endpoint(
             settings={
-                "response_type": (WaterResult,),
+                "response_type": (Timeseries,),
                 "auth": [],
                 "endpoint_path": "/stations/{station}/{timeseries}.json",
                 "operation_id": "get_current_measurment_by_station",
@@ -50,6 +52,8 @@ class WaterApi(object):
                 "all": [
                     "station",
                     "timeseries",
+                    "include_current_measurement",
+                    "include_characteristic_values",
                 ],
                 "required": [
                     "station",
@@ -65,14 +69,20 @@ class WaterApi(object):
                 "openapi_types": {
                     "station": (str,),
                     "timeseries": (str,),
+                    "include_current_measurement": (bool,),
+                    "include_characteristic_values": (bool,),
                 },
                 "attribute_map": {
                     "station": "station",
                     "timeseries": "timeseries",
+                    "include_current_measurement": "includeCurrentMeasurement",
+                    "include_characteristic_values": "includeCharacteristicValues",
                 },
                 "location_map": {
                     "station": "path",
                     "timeseries": "path",
+                    "include_current_measurement": "query",
+                    "include_characteristic_values": "query",
                 },
                 "collection_format_map": {},
             },
@@ -144,7 +154,7 @@ class WaterApi(object):
         )
 
     def get_current_measurment_by_station(self, station, timeseries, **kwargs):
-        """Zugriff auf CurrentMeasurment  # noqa: E501
+        """Zugriff auf eine Timeseries  # noqa: E501
 
         Liefert den aktuellen Wert der Station (Pegel). Kann auch als Unterressource von Timeseries angefordert werden.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
@@ -158,6 +168,8 @@ class WaterApi(object):
             timeseries (str): timeseries shortname
 
         Keyword Args:
+            include_current_measurement (bool): Aktuell gemessener Wert. [optional]
+            include_characteristic_values (bool): kennzeichnende Wasserstände. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -183,10 +195,14 @@ class WaterApi(object):
             _host_index (int/None): specifies the index of the server
                 that we want to use.
                 Default is read from the configuration.
+            _request_auths (list): set to override the auth_settings for an a single
+                request; this effectively ignores the authentication
+                in the spec for a single request.
+                Default is None
             async_req (bool): execute request asynchronously
 
         Returns:
-            WaterResult
+            Timeseries
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -199,6 +215,7 @@ class WaterApi(object):
         kwargs["_spec_property_naming"] = kwargs.get("_spec_property_naming", False)
         kwargs["_content_type"] = kwargs.get("_content_type")
         kwargs["_host_index"] = kwargs.get("_host_index")
+        kwargs["_request_auths"] = kwargs.get("_request_auths", None)
         kwargs["station"] = station
         kwargs["timeseries"] = timeseries
         return self.get_current_measurment_by_station_endpoint.call_with_http_info(
@@ -248,6 +265,10 @@ class WaterApi(object):
             _host_index (int/None): specifies the index of the server
                 that we want to use.
                 Default is read from the configuration.
+            _request_auths (list): set to override the auth_settings for an a single
+                request; this effectively ignores the authentication
+                in the spec for a single request.
+                Default is None
             async_req (bool): execute request asynchronously
 
         Returns:
@@ -264,4 +285,5 @@ class WaterApi(object):
         kwargs["_spec_property_naming"] = kwargs.get("_spec_property_naming", False)
         kwargs["_content_type"] = kwargs.get("_content_type")
         kwargs["_host_index"] = kwargs.get("_host_index")
+        kwargs["_request_auths"] = kwargs.get("_request_auths", None)
         return self.get_waters_endpoint.call_with_http_info(**kwargs)

@@ -12,13 +12,13 @@
 import sys
 import unittest
 
-from deutschland.pegel_online.model.timeseries_gauge_zero import TimeseriesGaugeZero
+from deutschland.pegel_online.model.timeseries_not_found import TimeseriesNotFound
 
 from deutschland import pegel_online
 
 
-class TestTimeseriesGaugeZero(unittest.TestCase):
-    """TimeseriesGaugeZero unit test stubs"""
+class TestTimeseriesNotFound(unittest.TestCase):
+    """TimeseriesNotFound unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,10 +26,10 @@ class TestTimeseriesGaugeZero(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testTimeseriesGaugeZero(self):
-        """Test TimeseriesGaugeZero"""
+    def testTimeseriesNotFound(self):
+        """Test TimeseriesNotFound"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = TimeseriesGaugeZero()  # noqa: E501
+        # model = TimeseriesNotFound()  # noqa: E501
         pass
 
 

@@ -1,5 +1,5 @@
 """
-    Wasserstraßen- und Schifffahrtsverwaltung: Pegel-Online API
+    Pegel-Online API
 
     API für das bundesweite Messstellennetz der Wasserstraßen- und Schifffahrtsverwaltung des Bundes.  Die API stellt drei verschiedene Ressourcen zur Verfügung: __Station__, __Measurement__, __Water__. ### Authentifizierung / Autorisierung / API Limitierung Es ist keine Authentifizierung oder Autorisierung notwendig. Aktuell besteht keine API Limitierung. ### Allgemeine Query-Parameter Zusätzlich zu den angegebenen Parametern sind ebenfalls allgemeine Parameter für alle Schnittstellen verfügbar ([Dokumentation](https://www.pegelonline.wsv.de/webservice/dokuRestapi;jsessionid=A294589CCEF6630142D2589F49BFA2EC#urlParameter)). - `charset`: Gibt die Kodierung der Response an. Standard ist hier _UTF-8_. Möglich ist z.B. auch _ISO-8859-1_. - `prettyprint`: Kann die zur besseren Lesbarkeit standardmäßig aktivierte Teilung der Response in mehreren Zeilen deaktivieren: _prettyprint=false_. Diese Einstellung wird für den produktiven Einsatz empfohlen. - `limit/offset`: Einschränkung der Anzahl der Ergebnisse. Hiermit kann 'Pagination' realisiert werden. `limit` gibt dabei die Anzahl der zurückgegebenen Elemente an. `offset` ermöglicht einen Offset vom Startwert. Beispiel: _limit=10&offset=20_ bedeutet, dass 10 Elemente beginnend mit dem 21. Element zurückgegeben werden.   # noqa: E501
 
@@ -188,7 +188,7 @@ class OpenApiModel(object):
         if self.get("_spec_property_naming", False):
             return cls._new_from_openapi_data(**self.__dict__)
         else:
-            return new_cls.__new__(cls, **self.__dict__)
+            return cls.__new__(cls, **self.__dict__)
 
     def __deepcopy__(self, memo):
         cls = self.__class__
@@ -196,7 +196,7 @@ class OpenApiModel(object):
         if self.get("_spec_property_naming", False):
             new_inst = cls._new_from_openapi_data()
         else:
-            new_inst = cls.__new__(cls)
+            new_inst = cls.__new__(cls, **self.__dict__)
 
         for k, v in self.__dict__.items():
             setattr(new_inst, k, deepcopy(v, memo))
@@ -725,10 +725,8 @@ COERCION_INDEX_BY_TYPE = {
 UPCONVERSION_TYPE_PAIRS = (
     (str, datetime),
     (str, date),
-    (
-        int,
-        float,
-    ),  # A float may be serialized as an integer, e.g. '3' is a valid serialized float.
+    # A float may be serialized as an integer, e.g. '3' is a valid serialized float.
+    (int, float),
     (list, ModelComposed),
     (dict, ModelComposed),
     (str, ModelComposed),
@@ -1608,7 +1606,7 @@ def validate_and_convert_types(
     input_class_simple = get_simple_class(input_value)
     valid_type = is_valid_type(input_class_simple, valid_classes)
     if not valid_type:
-        if configuration or (input_class_simple == dict and not dict in valid_classes):
+        if configuration or (input_class_simple == dict and dict not in valid_classes):
             # if input_value is not valid_type try to convert it
             converted_instance = attempt_convert_item(
                 input_value,
@@ -1702,11 +1700,13 @@ def model_to_dict(model_instance, serialize=True):
             attribute_map
     """
     result = {}
-    extract_item = (
-        lambda item: (item[0], model_to_dict(item[1], serialize=serialize))
-        if hasattr(item[1], "_data_store")
-        else item
-    )
+
+    def extract_item(item):
+        return (
+            (item[0], model_to_dict(item[1], serialize=serialize))
+            if hasattr(item[1], "_data_store")
+            else item
+        )
 
     model_instances = [model_instance]
     if model_instance._composed_schemas:
@@ -2079,7 +2079,9 @@ def validate_get_composed_info(constant_args, model_args, self):
     var_name_to_model_instances = {}
     for prop_name in model_args:
         if prop_name not in discarded_args:
-            var_name_to_model_instances[prop_name] = [self] + composed_instances
+            var_name_to_model_instances[prop_name] = [self] + list(
+                filter(lambda x: prop_name in x.openapi_types, composed_instances)
+            )
 
     return [
         composed_instances,
