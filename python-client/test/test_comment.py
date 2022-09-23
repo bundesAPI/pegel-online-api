@@ -12,9 +12,12 @@
 import sys
 import unittest
 
-from deutschland.pegel_online.model.comment import Comment
+from deutschland.pegel_online.model.comment_inner import CommentInner
 
 from deutschland import pegel_online
+
+globals()["CommentInner"] = CommentInner
+from deutschland.pegel_online.model.comment import Comment
 
 
 class TestComment(unittest.TestCase):

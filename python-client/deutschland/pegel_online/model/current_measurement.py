@@ -100,39 +100,9 @@ class CurrentMeasurement(ModelNormal):
                 str,
                 none_type,
             ),  # noqa: E501
-            "value": (
-                bool,
-                date,
-                datetime,
-                dict,
-                float,
-                int,
-                list,
-                str,
-                none_type,
-            ),  # noqa: E501
-            "trend": (
-                bool,
-                date,
-                datetime,
-                dict,
-                float,
-                int,
-                list,
-                str,
-                none_type,
-            ),  # noqa: E501
-            "state_mnw_mhw": (
-                bool,
-                date,
-                datetime,
-                dict,
-                float,
-                int,
-                list,
-                str,
-                none_type,
-            ),  # noqa: E501
+            "value": (float,),  # noqa: E501
+            "trend": (float,),  # noqa: E501
+            "state_mnw_mhw": (str,),  # noqa: E501
             "state_nsw_hsw": (
                 bool,
                 date,
@@ -199,14 +169,14 @@ class CurrentMeasurement(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             timestamp (bool, date, datetime, dict, float, int, list, str, none_type): [optional]  # noqa: E501
-            value (bool, date, datetime, dict, float, int, list, str, none_type): [optional]  # noqa: E501
-            trend (bool, date, datetime, dict, float, int, list, str, none_type): [optional]  # noqa: E501
-            state_mnw_mhw (bool, date, datetime, dict, float, int, list, str, none_type): [optional]  # noqa: E501
+            value (float): [optional]  # noqa: E501
+            trend (float): [optional]  # noqa: E501
+            state_mnw_mhw (str): [optional]  # noqa: E501
             state_nsw_hsw (bool, date, datetime, dict, float, int, list, str, none_type): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop("_check_type", True)
-        _spec_property_naming = kwargs.pop("_spec_property_naming", False)
+        _spec_property_naming = kwargs.pop("_spec_property_naming", True)
         _path_to_item = kwargs.pop("_path_to_item", ())
         _configuration = kwargs.pop("_configuration", None)
         _visited_composed_classes = kwargs.pop("_visited_composed_classes", ())
@@ -294,9 +264,9 @@ class CurrentMeasurement(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             timestamp (bool, date, datetime, dict, float, int, list, str, none_type): [optional]  # noqa: E501
-            value (bool, date, datetime, dict, float, int, list, str, none_type): [optional]  # noqa: E501
-            trend (bool, date, datetime, dict, float, int, list, str, none_type): [optional]  # noqa: E501
-            state_mnw_mhw (bool, date, datetime, dict, float, int, list, str, none_type): [optional]  # noqa: E501
+            value (float): [optional]  # noqa: E501
+            trend (float): [optional]  # noqa: E501
+            state_mnw_mhw (str): [optional]  # noqa: E501
             state_nsw_hsw (bool, date, datetime, dict, float, int, list, str, none_type): [optional]  # noqa: E501
         """
 

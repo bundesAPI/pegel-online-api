@@ -15,6 +15,7 @@ import sys  # noqa: F401
 from deutschland.pegel_online.api_client import ApiClient
 from deutschland.pegel_online.api_client import Endpoint as _Endpoint
 from deutschland.pegel_online.model.measurement_result import MeasurementResult
+from deutschland.pegel_online.model.timeseries_not_found import TimeseriesNotFound
 from deutschland.pegel_online.model_utils import (  # noqa: F401
     check_allowed_values,
     check_validations,
@@ -150,7 +151,7 @@ class MeasurementApi(object):
                 "collection_format_map": {},
             },
             headers_map={
-                "accept": ["image/png"],
+                "accept": ["image/png", "application/json"],
                 "content_type": [],
             },
             api_client=api_client,
@@ -171,7 +172,7 @@ class MeasurementApi(object):
             timeseries (str): timeseries shortname
 
         Keyword Args:
-            start (str): Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. \"P8D\" für die Messwerte der letzten 8 Tage) sind möglich.. [optional]
+            start (str): Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. 'P8D' für die Messwerte der letzten 8 Tage) sind möglich.. [optional]
             end (str): Endzeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Kann auch leer gelassen werden, dann wird automatisch der aktuelle Zeitstempel verwendet.. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
@@ -198,6 +199,10 @@ class MeasurementApi(object):
             _host_index (int/None): specifies the index of the server
                 that we want to use.
                 Default is read from the configuration.
+            _request_auths (list): set to override the auth_settings for an a single
+                request; this effectively ignores the authentication
+                in the spec for a single request.
+                Default is None
             async_req (bool): execute request asynchronously
 
         Returns:
@@ -214,6 +219,7 @@ class MeasurementApi(object):
         kwargs["_spec_property_naming"] = kwargs.get("_spec_property_naming", False)
         kwargs["_content_type"] = kwargs.get("_content_type")
         kwargs["_host_index"] = kwargs.get("_host_index")
+        kwargs["_request_auths"] = kwargs.get("_request_auths", None)
         kwargs["station"] = station
         kwargs["timeseries"] = timeseries
         return self.get_measurement_by_station_endpoint.call_with_http_info(**kwargs)
@@ -233,7 +239,7 @@ class MeasurementApi(object):
             timeseries (str): timeseries shortname
 
         Keyword Args:
-            start (str): Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. \"P8D\" für die Messwerte der letzten 8 Tage) sind möglich.. [optional]
+            start (str): Zeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Angabe eines Datums oder einer Period (_P_, z.B. 'P8D' für die Messwerte der letzten 8 Tage) sind möglich.. [optional]
             end (str): Endzeitpunkt codiert im [ISO_8601](https://de.wikipedia.org/wiki/ISO_8601) Format. Kann auch leer gelassen werden, dann wird automatisch der aktuelle Zeitstempel verwendet.. [optional]
             width (float): Breite der grafischen Darstellung. [optional]
             height (float): Höhe der grafischen Darstellung. [optional]
@@ -263,6 +269,10 @@ class MeasurementApi(object):
             _host_index (int/None): specifies the index of the server
                 that we want to use.
                 Default is read from the configuration.
+            _request_auths (list): set to override the auth_settings for an a single
+                request; this effectively ignores the authentication
+                in the spec for a single request.
+                Default is None
             async_req (bool): execute request asynchronously
 
         Returns:
@@ -279,6 +289,7 @@ class MeasurementApi(object):
         kwargs["_spec_property_naming"] = kwargs.get("_spec_property_naming", False)
         kwargs["_content_type"] = kwargs.get("_content_type")
         kwargs["_host_index"] = kwargs.get("_host_index")
+        kwargs["_request_auths"] = kwargs.get("_request_auths", None)
         kwargs["station"] = station
         kwargs["timeseries"] = timeseries
         return self.get_measurement_diagram_by_station_endpoint.call_with_http_info(

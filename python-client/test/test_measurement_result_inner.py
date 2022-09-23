@@ -12,16 +12,15 @@
 import sys
 import unittest
 
-from deutschland.pegel_online.model.station import Station
+from deutschland.pegel_online.model.measurement_result_inner import (
+    MeasurementResultInner,
+)
 
 from deutschland import pegel_online
 
-globals()["Station"] = Station
-from deutschland.pegel_online.model.station_overview_result import StationOverviewResult
 
-
-class TestStationOverviewResult(unittest.TestCase):
-    """StationOverviewResult unit test stubs"""
+class TestMeasurementResultInner(unittest.TestCase):
+    """MeasurementResultInner unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,10 +28,10 @@ class TestStationOverviewResult(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testStationOverviewResult(self):
-        """Test StationOverviewResult"""
+    def testMeasurementResultInner(self):
+        """Test MeasurementResultInner"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = StationOverviewResult()  # noqa: E501
+        # model = MeasurementResultInner()  # noqa: E501
         pass
 
 

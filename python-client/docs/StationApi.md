@@ -99,7 +99,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_stations_by_id**
-> StationOverviewResult get_stations_by_id(station)
+> Station get_stations_by_id(station)
 
 Zugriff auf eine bestimmte Station (Pegel)
 
@@ -112,7 +112,7 @@ Zugriff auf eine Station (Pegel) ist mittels des Namens, der Pegelnummer sowie d
 import time
 from deutschland import pegel_online
 from deutschland.pegel_online.api import station_api
-from deutschland.pegel_online.model.station_overview_result import StationOverviewResult
+from deutschland.pegel_online.model.station import Station
 from pprint import pprint
 # Defining the host is optional and defaults to https://www.pegelonline.wsv.de/webservices/rest-api/v2
 # See configuration.py for a list of all supported configuration parameters.
@@ -160,7 +160,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**StationOverviewResult**](StationOverviewResult.md)
+[**Station**](Station.md)
 
 ### Authorization
 
