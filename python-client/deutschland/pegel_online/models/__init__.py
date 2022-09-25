@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # flake8: noqa
 
 # import all models into this package
@@ -10,16 +12,10 @@
 # sys.setrecursionlimit(n)
 
 from deutschland.pegel_online.model.comment import Comment
-from deutschland.pegel_online.model.comment_inner import CommentInner
 from deutschland.pegel_online.model.current_measurement import CurrentMeasurement
 from deutschland.pegel_online.model.measurement_result import MeasurementResult
-from deutschland.pegel_online.model.measurement_result_inner import (
-    MeasurementResultInner,
-)
 from deutschland.pegel_online.model.station import Station
 from deutschland.pegel_online.model.station_overview_result import StationOverviewResult
-from deutschland.pegel_online.model.station_water import StationWater
 from deutschland.pegel_online.model.timeseries import Timeseries
-from deutschland.pegel_online.model.timeseries_gauge_zero import TimeseriesGaugeZero
 from deutschland.pegel_online.model.timeseries_not_found import TimeseriesNotFound
 from deutschland.pegel_online.model.water_result import WaterResult

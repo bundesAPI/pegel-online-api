@@ -7,10 +7,10 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   pegel_online.api
    pegel_online.apis
    pegel_online.model
    pegel_online.models
+   pegel_online.paths
 
 Submodules
 ----------
@@ -39,18 +39,18 @@ pegel\_online.exceptions module
    :undoc-members:
    :show-inheritance:
 
-pegel\_online.model\_utils module
----------------------------------
-
-.. automodule:: pegel_online.model_utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 pegel\_online.rest module
 -------------------------
 
 .. automodule:: pegel_online.rest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pegel\_online.schemas module
+----------------------------
+
+.. automodule:: pegel_online.schemas
    :members:
    :undoc-members:
    :show-inheritance:

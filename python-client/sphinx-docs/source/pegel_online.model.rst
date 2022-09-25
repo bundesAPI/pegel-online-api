@@ -12,14 +12,6 @@ pegel\_online.model.comment module
    :undoc-members:
    :show-inheritance:
 
-pegel\_online.model.comment\_inner module
------------------------------------------
-
-.. automodule:: pegel_online.model.comment_inner
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 pegel\_online.model.current\_measurement module
 -----------------------------------------------
 
@@ -32,14 +24,6 @@ pegel\_online.model.measurement\_result module
 ----------------------------------------------
 
 .. automodule:: pegel_online.model.measurement_result
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-pegel\_online.model.measurement\_result\_inner module
------------------------------------------------------
-
-.. automodule:: pegel_online.model.measurement_result_inner
    :members:
    :undoc-members:
    :show-inheritance:
@@ -60,26 +44,10 @@ pegel\_online.model.station\_overview\_result module
    :undoc-members:
    :show-inheritance:
 
-pegel\_online.model.station\_water module
------------------------------------------
-
-.. automodule:: pegel_online.model.station_water
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 pegel\_online.model.timeseries module
 -------------------------------------
 
 .. automodule:: pegel_online.model.timeseries
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-pegel\_online.model.timeseries\_gauge\_zero module
---------------------------------------------------
-
-.. automodule:: pegel_online.model.timeseries_gauge_zero
    :members:
    :undoc-members:
    :show-inheritance:
