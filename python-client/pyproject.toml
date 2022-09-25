@@ -2,7 +2,7 @@
 [tool.poetry]
 name = "de-pegel-online"
 version = "0.1.0"
-description = "Wasserstraßen- und Schifffahrtsverwaltung: Pegel-Online API"
+description = "Pegel-Online API"
 keywords = ["OpenAPI", "OpenAPI-Generator", "pegel-online", "App", "API"]
 homepage = "https://github.com/bundesAPI/pegel-online-api"
 authors = ["BundesAPI <kontakt@bund.dev>"]
