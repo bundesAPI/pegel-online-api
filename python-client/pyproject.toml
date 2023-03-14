@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "de-pegel-online"
-version = "0.1.0"
+version = "0.1.1"
 description = "Pegel-Online API"
 keywords = ["OpenAPI", "OpenAPI-Generator", "pegel-online", "App", "API"]
 homepage = "https://github.com/bundesAPI/pegel-online-api"
