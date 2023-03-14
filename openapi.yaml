@@ -547,7 +547,7 @@ components:
           format: float
           example: 15
           description: "Abstand der Messwerte in Minuten."
-        currrentMeasurement:
+        currentMeasurement:
           $ref: "#/components/schemas/CurrentMeasurement"
         gaugeZero:
           type: object
