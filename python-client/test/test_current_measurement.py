@@ -1,5 +1,3 @@
-# flake8: noqa
-
 """
     Pegel-Online API
 
@@ -11,20 +9,29 @@
 """
 
 
-__version__ = "0.1.0"
+import sys
+import unittest
 
-# import ApiClient
-from deutschland.pegel_online.api_client import ApiClient
+from deutschland.pegel_online.model.current_measurement import CurrentMeasurement
 
-# import Configuration
-from deutschland.pegel_online.configuration import Configuration
+from deutschland import pegel_online
 
-# import exceptions
-from deutschland.pegel_online.exceptions import (
-    ApiAttributeError,
-    ApiException,
-    ApiKeyError,
-    ApiTypeError,
-    ApiValueError,
-    OpenApiException,
-)
+
+class TestCurrentMeasurement(unittest.TestCase):
+    """CurrentMeasurement unit test stubs"""
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def testCurrentMeasurement(self):
+        """Test CurrentMeasurement"""
+        # FIXME: construct object with mandatory attributes with example values
+        # model = CurrentMeasurement()  # noqa: E501
+        pass
+
+
+if __name__ == "__main__":
+    unittest.main()

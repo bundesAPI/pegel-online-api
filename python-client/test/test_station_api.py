@@ -1,5 +1,3 @@
-# flake8: noqa
-
 """
     Pegel-Online API
 
@@ -11,20 +9,36 @@
 """
 
 
-__version__ = "0.1.0"
+import unittest
 
-# import ApiClient
-from deutschland.pegel_online.api_client import ApiClient
+from deutschland.pegel_online.api.station_api import StationApi  # noqa: E501
 
-# import Configuration
-from deutschland.pegel_online.configuration import Configuration
+from deutschland import pegel_online
 
-# import exceptions
-from deutschland.pegel_online.exceptions import (
-    ApiAttributeError,
-    ApiException,
-    ApiKeyError,
-    ApiTypeError,
-    ApiValueError,
-    OpenApiException,
-)
+
+class TestStationApi(unittest.TestCase):
+    """StationApi unit test stubs"""
+
+    def setUp(self):
+        self.api = StationApi()  # noqa: E501
+
+    def tearDown(self):
+        pass
+
+    def test_get_stations(self):
+        """Test case for get_stations
+
+        Übersicht über alle Stationen (Pegel)  # noqa: E501
+        """
+        pass
+
+    def test_get_stations_by_id(self):
+        """Test case for get_stations_by_id
+
+        Zugriff auf eine bestimmte Station (Pegel)  # noqa: E501
+        """
+        pass
+
+
+if __name__ == "__main__":
+    unittest.main()

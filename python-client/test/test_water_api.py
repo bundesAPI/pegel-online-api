@@ -1,5 +1,3 @@
-# flake8: noqa
-
 """
     Pegel-Online API
 
@@ -11,20 +9,36 @@
 """
 
 
-__version__ = "0.1.0"
+import unittest
 
-# import ApiClient
-from deutschland.pegel_online.api_client import ApiClient
+from deutschland.pegel_online.api.water_api import WaterApi  # noqa: E501
 
-# import Configuration
-from deutschland.pegel_online.configuration import Configuration
+from deutschland import pegel_online
 
-# import exceptions
-from deutschland.pegel_online.exceptions import (
-    ApiAttributeError,
-    ApiException,
-    ApiKeyError,
-    ApiTypeError,
-    ApiValueError,
-    OpenApiException,
-)
+
+class TestWaterApi(unittest.TestCase):
+    """WaterApi unit test stubs"""
+
+    def setUp(self):
+        self.api = WaterApi()  # noqa: E501
+
+    def tearDown(self):
+        pass
+
+    def test_get_current_measurment_by_station(self):
+        """Test case for get_current_measurment_by_station
+
+        Zugriff auf eine Timeseries  # noqa: E501
+        """
+        pass
+
+    def test_get_waters(self):
+        """Test case for get_waters
+
+        Zugriff auf die Ressource Water  # noqa: E501
+        """
+        pass
+
+
+if __name__ == "__main__":
+    unittest.main()

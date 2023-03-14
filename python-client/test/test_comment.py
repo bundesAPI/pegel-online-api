@@ -1,5 +1,3 @@
-# flake8: noqa
-
 """
     Pegel-Online API
 
@@ -11,20 +9,32 @@
 """
 
 
-__version__ = "0.1.0"
+import sys
+import unittest
 
-# import ApiClient
-from deutschland.pegel_online.api_client import ApiClient
+from deutschland.pegel_online.model.comment_inner import CommentInner
 
-# import Configuration
-from deutschland.pegel_online.configuration import Configuration
+from deutschland import pegel_online
 
-# import exceptions
-from deutschland.pegel_online.exceptions import (
-    ApiAttributeError,
-    ApiException,
-    ApiKeyError,
-    ApiTypeError,
-    ApiValueError,
-    OpenApiException,
-)
+globals()["CommentInner"] = CommentInner
+from deutschland.pegel_online.model.comment import Comment
+
+
+class TestComment(unittest.TestCase):
+    """Comment unit test stubs"""
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def testComment(self):
+        """Test Comment"""
+        # FIXME: construct object with mandatory attributes with example values
+        # model = Comment()  # noqa: E501
+        pass
+
+
+if __name__ == "__main__":
+    unittest.main()
